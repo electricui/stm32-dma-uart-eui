@@ -26,6 +26,9 @@ usart_rx_buffer_read( void );
 uint8_t
 usart_send_string( const char* str );
 
+uint8_t
+usart_send_buffer( uint8_t* data, size_t len );
+
 /* ------------------------------------------------------------------*/
 
 void

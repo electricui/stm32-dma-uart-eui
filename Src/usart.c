@@ -169,6 +169,21 @@ usart_send_string( const char* str )
     return ret;
 }
 
+uint8_t
+usart_send_buffer( uint8_t* data, size_t len )
+{
+    uint8_t ret = 0;
+
+    if( ringbuff_get_free(&usart_tx_buff) >= len )
+    {
+        ringbuff_write(&usart_tx_buff, data, len);
+        usart_start_tx_dma();
+        ret = 1;
+    }
+
+    return ret;
+}
+
 // Provide the DMA peripheral with the ringbuffer output data
 void
 usart_start_tx_dma( void )

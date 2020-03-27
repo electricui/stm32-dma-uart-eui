@@ -40,6 +40,7 @@ add_definitions(${defines})
 file(GLOB_RECURSE SOURCES ${sources})
 
 include_directories(${includes})
+include_directories(Drivers/electricui-embedded/src)
 
 add_executable($${PROJECT_NAME}.elf $${SOURCES} $${LINKER_SCRIPT})
 
