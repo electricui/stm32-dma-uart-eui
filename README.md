@@ -28,6 +28,14 @@ The actual time between the rx Idle Line interrupt firing at the end of the inbo
 - The board is configured to run at `115200` baud by default.
 - The orange led, `LD3` on `PD13`, is used as a blinker for the standard [`hello-electric` example](https://electricui.com/docs/quick-start/ui).
 
+### Changing the microcontroller family
+
+This example is setup against the `STM32F407VGT6`, but because it uses the ST HAL, changing to different F4 parts isn't too hard.
+
+- If you're using `cmake`, change the `-DSTM32F407xx` to match your part i.e `-DSTM32F405xx`.
+- Ensure your linker file `STM32F407BVGTx_FLASH.ld` file matches your micro, as your part might have more/less RAM and flash.
+- Adjust the USART peripheral in use, GPIO pins, and LED pin as required for your development board.
+
 ## Firmware Setup
 
 This project was created with CubeMX (.ioc file included), but the `usart.h/.c` are heavily generated. The project was exported for SW4STM32, but imported and edited with CLion.
