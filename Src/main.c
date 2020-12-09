@@ -29,7 +29,7 @@ eui_message_t tracked_vars[] =
     EUI_UINT8(  "led_blink",   blink_enable ),
     EUI_UINT8(  "led_state",   led_state ),
     EUI_UINT16( "lit_time",    glow_time ),
-    EUI_CHAR_RO_ARRAY( "name", nickname ),
+    EUI_CHAR_ARRAY_RO( "name", nickname ),
 };
 
 int main( void )
@@ -63,7 +63,8 @@ int main( void )
      * and let the user process the buffer in their own time.
     */
 
-    #pragma clang diagnostic ignored "-Wmissing-noreturn"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
     while (1)
     {
         // Check if the inbound buffer has any data in it
@@ -90,6 +91,7 @@ int main( void )
         }
 
     }
+#pragma clang diagnostic pop
 }
 
 void SystemClock_Config(void)
