@@ -1,4 +1,3 @@
-#THIS FILE IS AUTO GENERATED FROM THE TEMPLATE! DO NOT CHANGE!
 SET(CMAKE_SYSTEM_NAME Generic)
 SET(CMAKE_SYSTEM_VERSION 1)
 cmake_minimum_required(VERSION 3.7)
@@ -16,9 +15,9 @@ set(SIZE arm-none-eabi-size)
 
 SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F407VGTx_FLASH.ld )
 
-#Uncomment for hardware floating point
-#SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
-#add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
+# Uncomment for hardware floating point
+SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
+add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
 
 #Uncomment for software floating point
 #SET(FPU_FLAGS "-mfloat-abi=soft")
@@ -34,15 +33,25 @@ SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINK
 PROJECT(STM32F4_EUI_DMA C CXX ASM)
 set(CMAKE_CXX_STANDARD 11)
 
-#add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
 add_definitions(-DUSE_FULL_LL_DRIVER -DUSE_HAL_DRIVER -DSTM32F407xx)
 
-file(GLOB_RECURSE SOURCES "startup/*.*" "Drivers/*.*" "Src/*.*")
+file(GLOB_RECURSE SOURCES   "Drivers/CMSIS/*.*"
+                            "Drivers/STM32F4xx_HAL_Driver/*.*"
+                            "Src/*.*"
+                            "startup/*.*"
+                            )
 
-include_directories(Inc Drivers/STM32F4xx_HAL_Driver/Inc Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include)
-include_directories(Drivers/electricui-embedded/src)
+include_directories(Inc
+                    Drivers/STM32F4xx_HAL_Driver/Inc
+                    Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
+                    Drivers/CMSIS/Device/ST/STM32F4xx/Include
+                    Drivers/CMSIS/Include
+                    )
+
+add_subdirectory(Drivers/electricui-embedded)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
+target_link_libraries(${PROJECT_NAME}.elf m electricui)
 
 set(CMAKE_EXE_LINKER_FLAGS
         "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map")

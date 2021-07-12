@@ -38,17 +38,18 @@ This example is setup against the `STM32F407VGT6`, but because it uses the ST HA
 
 ## Firmware Setup
 
-This project was created with CubeMX (.ioc file included), but the `usart.h/.c` are heavily generated. The project was exported for SW4STM32, but imported and edited with CLion.
+This project was created with CubeMX (.ioc file included), but the `usart.h/.c` are heavily modified. The project was exported for SW4STM32, but imported and edited with CLion.
 
 We've used the ST `LL` hal libraries.
 
-1. The `electricui-embedded` library isn't included in this repo, [download it here](https://github.com/electricui/electricui-embedded) and put the contents in `Drivers/electricui-embedded`.
+1. The `electricui-embedded` library isn't included in this repo. 
+   - Either [download the zip from GitHub](https://github.com/electricui/electricui-embedded) and put the contents in `Drivers/electricui-embedded`.
+   - Or ```git clone https://github.com/electricui/electricui-embedded``` into `/Drivers`.
+2. Import the project into your IDE, or build using CMake.
+3. Configure the build target as required for your IDE.
+4. Build and flash the project to the devboard.
 
-    >You might need to delete or 'IDE exclude' the `electricui-embedded` sub-directories `test` and `examples` from the build.
-
-2. Import the project into your IDE, or build using CLion's generated CMakeList.
-3. Configure the build target as required
-4. Build and flash the project to the devboard
+> If you are not using CMake, you may need to delete or 'IDE exclude' the `electricui-embedded` sub-directories `test` and `examples` from the build.
 
 Pre-built binaries for the `STM32F407VGT6 discovery board` are in `/binaries`.
 
